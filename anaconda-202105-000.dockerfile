@@ -5,8 +5,7 @@ FROM continuumio/anaconda3:2021.05
 RUN useradd --user-group --system --create-home --no-log-init anaconda && echo 'anaconda:anaconda' | chpasswd && echo 'root:root' | chpasswd
 
 ENV  TIME_ZONE Asiz/Shanghai
-RUN \
-&& apk add --no-cache tzdata \
+RUN apt-get install -y tzdata \
 && echo "${TIME_ZONE}" > /etc/timezone \
 && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime
 
