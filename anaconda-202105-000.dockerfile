@@ -1,21 +1,24 @@
 FROM continuumio/anaconda3:2021.05
 
-# root/root
-# anaconda/anaconda
-RUN useradd --user-group --system --create-home --no-log-init anaconda && echo 'anaconda:anaconda' | chpasswd && echo 'root:root' | chpasswd
-
 ENV  TIME_ZONE Asiz/Shanghai
-RUN apt-get install -y tzdata \
-&& echo "${TIME_ZONE}" > /etc/timezone \
-&& ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime
 
-# 安装openssh-server
-RUN apt-get update && apt-get install -y openssh-server
-RUN mkdir -p /var/run/sshd
+RUN useradd --user-group --system --create-home --no-log-init anaconda \
+    && echo 'anaconda:anaconda' | chpasswd \
+    && echo 'root:' | chpasswd \
+    && apt-get update \
+    && apt-get install -y tzdata openssh-server \
+    && apt-get clean \
+    && echo "${TIME_ZONE}" > /etc/timezone \
+    && ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
+    && mkdir -p /var/run/sshd
 
-# 程序代码放在code目录中
+# code - your python code
+# data - csv file or other data files
+# output - output your data or logs
 VOLUME /code /data /output
 
+# 22 - sshd
+# 8888 - jupyter
 EXPOSE 22 8888
 
 # p@ssw0rd：jupyter1204
