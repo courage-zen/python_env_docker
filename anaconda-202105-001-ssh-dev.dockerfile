@@ -10,4 +10,6 @@ EXPOSE 22
 
 # sshd要root运行
 USER root
+COPY ./sshd_config /etc/ssh/
+
 CMD ["/usr/sbin/sshd","-D"]
