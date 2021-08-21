@@ -3,8 +3,8 @@ FROM continuumio/anaconda3:2021.05
 ENV  TIME_ZONE Asiz/Shanghai
 
 RUN useradd --user-group --system --create-home --no-log-init anaconda \
-    && echo 'anaconda:anaconda' | chpasswd \
-    && echo 'root:' | chpasswd \
+    && echo 'anaconda:Eat2times@day' | chpasswd \
+    && echo 'root:Eat2times@day' | chpasswd \
     && apt-get update \
     && apt-get install -y tzdata openssh-server \
     && apt-get clean \
